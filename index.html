@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife Planner | Personalized Fitness & Nutrition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --secondary: #ff9800;
+            --light: #f9f9f9;
+            --dark: #333;
+            --gray: #757575;
+            --light-gray: #e0e0e0;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo i {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #e68900;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Form Section */
+        .form-section {
+            padding: 4rem 0;
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-dark);
+            font-size: 2.2rem;
+        }
+        
+        .form-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            margin-top: 8px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .radio-option input {
+            width: auto;
+        }
+        
+        /* Results Section */
+        .results-section {
+            padding: 4rem 0;
+        }
+        
+        .results-container {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .plan-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            transition: transform 0.3s;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .plan-title {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .plan-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .plan-list {
+            list-style-type: none;
+        }
+        
+        .plan-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--light-gray);
+        }
+        
+        .plan-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .plan-list strong {
+            color: var(--primary);
+        }
+        
+        /* Tips Section */
+        .tips-section {
+            padding: 4rem 0;
+            background-color: var(--light);
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tip-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .tip-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 3rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-dark);
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .header-content nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 3rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .plan-card, .tip-card {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .spinner i {
+            font-size: 3rem;
+            color: var(--primary);
+            animation: spin 1.5s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-dumbbell"></i>
+                <span>FitLife Planner</span>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#form">Get Your Plan</a></li>
+                    <li><a href="#results">My Plan</a></li>
+                    <li><a href="#tips">Health Tips</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Your Personalized Fitness & Nutrition Plan</h1>
+            <p>Get a customized workout routine and diet plan based on your goals, fitness level, and lifestyle. Start your journey to a healthier you today!</p>
+            <a href="#form" class="btn">Create My Plan Now</a>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="form-section" id="form">
+        <div class="container">
+            <h2 class="section-title">Create Your Custom Plan</h2>
+            <div class="form-container">
+                <form id="fitnessForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" min="15" max="100" required placeholder="Your age">
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="number" id="height" min="100" max="250" required placeholder="Height in cm">
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (kg)</label>
+                            <input type="number" id="weight" min="30" max="200" required placeholder="Weight in kg">
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="male" name="gender" value="male" checked>
+                                    <label for="male">Male</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="female" name="gender" value="female">
+                                    <label for="female">Female</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="activity">Activity Level</label>
+                            <select id="activity" required>
+                                <option value="" disabled selected>Select your activity level</option>
+                                <option value="sedentary">Sedentary (little or no exercise)</option>
+                                <option value="light">Lightly active (light exercise 1-3 days/week)</option>
+                                <option value="moderate">Moderately active (moderate exercise 3-5 days/week)</option>
+                                <option value="active">Very active (hard exercise 6-7 days/week)</option>
+                                <option value="athlete">Athlete (twice per day, extra heavy workouts)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="goal">Fitness Goal</label>
+                            <select id="goal" required>
+                                <option value="" disabled selected>Select your primary goal</option>
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="muscle-gain">Muscle Gain</option>
+                                <option value="maintenance">Maintain Weight & Tone</option>
+                                <option value="endurance">Improve Endurance</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="days">Workout Days per Week</label>
+                            <select id="days" required>
+                                <option value="" disabled selected>How many days can you workout?</option>
+                                <option value="3">3 days</option>
+                                <option value="4">4 days</option>
+                                <option value="5">5 days</option>
+                                <option value="6">6 days</option>
+                                <option value="7">7 days</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="diet">Diet Preference</label>
+                            <select id="diet" required>
+                                <option value="" disabled selected>Select your diet preference</option>
+                                <option value="balanced">Balanced</option>
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="low-carb">Low Carb</option>
+                                <option value="high-protein">High Protein</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="allergies">Food Allergies or Restrictions (optional)</label>
+                        <input type="text" id="allergies" placeholder="e.g., nuts, dairy, gluten">
+                    </div>
+                    
+                    <div class="spinner" id="loadingSpinner">
+                        <i class="fas fa-spinner"></i>
+                        <p>Generating your personalized plan...</p>
+                    </div>
+                    
+                    <button type="submit" class="btn" id="generateBtn">Generate My Plan</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="results">
+        <div class="container">
+            <h2 class="section-title">Your Personalized Plan</h2>
+            <div class="results-container" id="resultsContainer">
+                <!-- Workout Plan Card -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3 class="plan-title">Workout Plan</h3>
+                        <div class="plan-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                    </div>
+                    <div id="workoutPlan">
+                        <p class="plan-intro">Your custom workout plan will appear here after you fill out the form.</p>
+                        <ul class="plan-list">
+                            <li><strong>Day 1:</strong> Full body workout</li>
+                            <li><strong>Day 2:</strong> Cardio & Core</li>
+                            <li><strong>Day 3:</strong> Upper body focus</li>
+                            <li><strong>Day 4:</strong> Active recovery</li>
+                            <li><strong>Day 5:</strong> Lower body focus</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Diet Plan Card -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3 class="plan-title">Nutrition Plan</h3>
+                        <div class="plan-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                    </div>
+                    <div id="dietPlan">
+                        <p class="plan-intro">Your custom nutrition plan will appear here after you fill out the form.</p>
+                        <ul class="plan-list">
+                            <li><strong>Breakfast:</strong> High protein meal</li>
+                            <li><strong>Lunch:</strong> Balanced macros</li>
+                            <li><strong>Dinner:</strong> Light & nutritious</li>
+                            <li><strong>Snacks:</strong> Healthy options</li>
+                            <li><strong>Hydration:</strong> 2-3 liters daily</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Summary Card -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3 class="plan-title">Your Summary</h3>
+                        <div class="plan-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div id="planSummary">
+                        <p class="plan-intro">Your fitness summary will appear here after you fill out the form.</p>
+                        <ul class="plan-list">
+                            <li><strong>Daily Calories:</strong> Calculated based on your metrics</li>
+                            <li><strong>Macro Split:</strong> Customized for your goal</li>
+                            <li><strong>Workout Schedule:</strong> Tailored to your availability</li>
+                            <li><strong>Recommended Rest:</strong> 1-2 days per week</li>
+                            <li><strong>Progress Tracking:</strong> Weekly check-ins recommended</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="tips-section" id="tips">
+        <div class="container">
+            <h2 class="section-title">Health & Fitness Tips</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Stay Consistent</h3>
+                    <p>Consistency is key to seeing results. Stick to your plan even on days when motivation is low. Small, regular efforts lead to big changes over time.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-glass-whiskey"></i>
+                    </div>
+                    <h3>Hydrate Properly</h3>
+                    <p>Drink at least 2-3 liters of water daily. Proper hydration improves energy levels, supports metabolism, and helps with recovery after workouts.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <h3>Prioritize Sleep</h3>
+                    <p>Aim for 7-9 hours of quality sleep per night. Sleep is when your body repairs muscle tissue and regulates hormones crucial for fitness progress.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FitLife Planner</h3>
+                    <p>Your personalized companion for fitness and nutrition success. We provide science-based plans tailored to your unique goals and lifestyle.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#form">Get Your Plan</a></li>
+                        <li><a href="#results">My Plan</a></li>
+                        <li><a href="#tips">Health Tips</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> support@fitlifeplanner.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fitness Street, Health City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 FitLife Planner. All rights reserved. | This is a sample project for educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mainNav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mainNav').classList.remove('active');
+            });
+        });
+
+        // Form Submission
+        document.getElementById('fitnessForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            const spinner = document.getElementById('loadingSpinner');
+            const generateBtn = document.getElementById('generateBtn');
+            spinner.style.display = 'block';
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Generating...';
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const activity = document.getElementById('activity').value;
+            const goal = document.getElementById('goal').value;
+            const days = document.getElementById('days').value;
+            const diet = document.getElementById('diet').value;
+            const allergies = document.getElementById('allergies').value || 'None specified';
+            
+            // Calculate BMI
+            const heightInMeters = height / 100;
+            const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+            
+            // Calculate BMR and daily calories based on Mifflin-St Jeor Equation
+            let bmr;
+            if (gender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+            
+            // Activity multipliers
+            const activityMultipliers = {
+                sedentary: 1.2,
+                light: 1.375,
+                moderate: 1.55,
+                active: 1.725,
+                athlete: 1.9
+            };
+            
+            const tdee = Math.round(bmr * activityMultipliers[activity]);
+            
+            // Adjust calories based on goal
+            let dailyCalories;
+            if (goal === 'weight-loss') {
+                dailyCalories = tdee - 500;
+            } else if (goal === 'muscle-gain') {
+                dailyCalories = tdee + 300;
+            } else {
+                dailyCalories = tdee;
+            }
+            
+            // Generate workout plan based on inputs
+            const workoutPlan = generateWorkoutPlan(goal, days, activity);
+            const dietPlan = generateDietPlan(goal, diet, dailyCalories, allergies);
+            const summary = generateSummary(name, age, height, weight, bmi, gender, goal, dailyCalories, days);
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // Update the results section
+                document.getElementById('workoutPlan').innerHTML = workoutPlan;
+                document.getElementById('dietPlan').innerHTML = dietPlan;
+                document.getElementById('planSummary').innerHTML = summary;
+                
+                // Show results container
+                document.getElementById('resultsContainer').style.display = 'grid';
+                
+                // Hide spinner and reset button
+                spinner.style.display = 'none';
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate My Plan';
+                
+                // Scroll to results
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        });
+
+        // Generate workout plan based on user inputs
+        function generateWorkoutPlan(goal, days, activityLevel) {
+            const workoutTemplates = {
+                'weight-loss': {
+                    focus: 'Cardio and full-body workouts with high intensity intervals',
+                    intensity: 'Moderate to High',
+                    rest: '1-2 days per week'
+                },
+                'muscle-gain': {
+                    focus: 'Strength training with progressive overload, split routines',
+                    intensity: 'High',
+                    rest: '1-2 days per week with focus on recovery'
+                },
+                'maintenance': {
+                    focus: 'Balanced mix of strength, cardio and flexibility training',
+                    intensity: 'Moderate',
+                    rest: '1-2 days per week'
+                },
+                'endurance': {
+                    focus: 'Cardiovascular training, circuit workouts, and stamina building',
+                    intensity: 'Moderate to High',
+                    rest: '1 day per week'
+                }
+            };
+            
+            const focus = workoutTemplates[goal].focus;
+            const intensity = workoutTemplates[goal].intensity;
+            const rest = workoutTemplates[goal].rest;
+            
+            // Generate workout days based on selected number of days
+            let workoutDays = [];
+            const workouts = [
+                'Full Body Strength',
+                'Cardio & Core',
+                'Upper Body Focus',
+                'Lower Body Focus',
+                'HIIT & Conditioning',
+                'Active Recovery/Yoga',
+                'Skill/Technique Work'
+            ];
+            
+            for (let i = 0; i < days; i++) {
+                workoutDays.push(workouts[i % workouts.length]);
+            }
+            
+            let workoutHTML = `
+                <p><strong>Focus:</strong> ${focus}</p>
+                <p><strong>Intensity:</strong> ${intensity}</p>
+                <p><strong>Recommended Rest:</strong> ${rest}</p>
+                <h4>Your ${days}-Day Schedule:</h4>
+                <ul class="plan-list">
+            `;
+            
+            workoutDays.forEach((workout, index) => {
+                workoutHTML += `<li><strong>Day ${index + 1}:</strong> ${workout}</li>`;
+            });
+            
+            workoutHTML += `</ul>`;
+            
+            // Add tips based on activity level
+            if (activityLevel === 'sedentary' || activityLevel === 'light') {
+                workoutHTML += `<p><strong>Tip:</strong> Start slowly and gradually increase intensity to prevent injury.</p>`;
+            }
+            
+            return workoutHTML;
+        }
+
+        // Generate diet plan based on user inputs
+        function generateDietPlan(goal, dietPreference, dailyCalories, allergies) {
+            // Macronutrient splits based on goal
+            const macroSplits = {
+                'weight-loss': { protein: 30, carbs: 40, fat: 30 },
+                'muscle-gain': { protein: 35, carbs: 45, fat: 20 },
+                'maintenance': { protein: 25, carbs: 50, fat: 25 },
+                'endurance': { protein: 20, carbs: 60, fat: 20 }
+            };
+            
+            const macros = macroSplits[goal];
+            const proteinCal = Math.round((dailyCalories * macros.protein) / 100 / 4);
+            const carbsCal = Math.round((dailyCalories * macros.carbs) / 100 / 4);
+            const fatCal = Math.round((dailyCalories * macros.fat) / 100 / 9);
+            
+            // Meal suggestions based on diet preference
+            const mealSuggestions = {
+                'balanced': {
+                    breakfast: 'Oatmeal with berries and eggs',
+                    lunch: 'Grilled chicken with quinoa and vegetables',
+                    dinner: 'Salmon with sweet potato and asparagus',
+                    snacks: 'Greek yogurt, nuts, fruit'
+                },
+                'vegetarian': {
+                    breakfast: 'Greek yogurt with granola and fruit',
+                    lunch: 'Lentil soup with whole grain bread',
+                    dinner: 'Tofu stir-fry with brown rice',
+                    snacks: 'Hummus with veggies, cheese, nuts'
+                },
+                'vegan': {
+                    breakfast: 'Smoothie with plant protein, spinach, and banana',
+                    lunch: 'Chickpea salad with quinoa',
+                    dinner: 'Bean chili with avocado',
+                    snacks: 'Edamame, fruit, nut butter'
+                },
+                'low-carb': {
+                    breakfast: 'Vegetable omelet with avocado',
+                    lunch: 'Cauliflower rice with chicken and vegetables',
+                    dinner: 'Zucchini noodles with meatballs',
+                    snacks: 'Cheese, boiled eggs, olives'
+                },
+                'high-protein': {
+                    breakfast: 'Protein pancakes with turkey bacon',
+                    lunch: 'Lean steak with broccoli and cauliflower',
+                    dinner: 'Grilled fish with green beans',
+                    snacks: 'Protein shake, cottage cheese, beef jerky'
+                }
+            };
+            
+            const meals = mealSuggestions[dietPreference];
+            
+            let dietHTML = `
+                <p><strong>Daily Calories:</strong> ${dailyCalories}</p>
+                <p><strong>Macronutrient Split:</strong> Protein ${macros.protein}%, Carbs ${macros.carbs}%, Fat ${macros.fat}%</p>
+                <p><strong>Protein:</strong> ${proteinCal}g | <strong>Carbs:</strong> ${carbsCal}g | <strong>Fat:</strong> ${fatCal}g</p>
+                <p><strong>Allergies/Restrictions:</strong> ${allergies}</p>
+                <h4>Meal Suggestions:</h4>
+                <ul class="plan-list">
+                    <li><strong>Breakfast:</strong> ${meals.breakfast}</li>
+                    <li><strong>Lunch:</strong> ${meals.lunch}</li>
+                    <li><strong>Dinner:</strong> ${meals.dinner}</li>
+                    <li><strong>Snacks:</strong> ${meals.snacks}</li>
+                    <li><strong>Hydration:</strong> 2-3 liters of water daily</li>
+                </ul>
+            `;
+            
+            return dietHTML;
+        }
+
+        // Generate summary based on user inputs
+        function generateSummary(name, age, height, weight, bmi, gender, goal, dailyCalories, days) {
+            // BMI category
+            let bmiCategory;
+            if (bmi < 18.5) bmiCategory = 'Underweight';
+            else if (bmi < 25) bmiCategory = 'Normal weight';
+            else if (bmi < 30) bmiCategory = 'Overweight';
+            else bmiCategory = 'Obese';
+            
+            // Goal description
+            const goalDescriptions = {
+                'weight-loss': 'Weight loss through calorie deficit and increased activity',
+                'muscle-gain': 'Muscle building through strength training and calorie surplus',
+                'maintenance': 'Maintaining current weight while improving body composition',
+                'endurance': 'Improving cardiovascular endurance and stamina'
+            };
+            
+            const goalDescription = goalDescriptions[goal];
+            
+            let summaryHTML = `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Age:</strong> ${age} | <strong>Gender:</strong> ${gender === 'male' ? 'Male' : 'Female'}</p>
+                <p><strong>Height:</strong> ${height}cm | <strong>Weight:</strong> ${weight}kg</p>
+                <p><strong>BMI:</strong> ${bmi} (${bmiCategory})</p>
+                <p><strong>Primary Goal:</strong> ${goalDescription}</p>
+                <p><strong>Daily Calorie Target:</strong> ${dailyCalories} calories</p>
+                <p><strong>Workout Frequency:</strong> ${days} days per week</p>
+                <h4>Recommendations:</h4>
+                <ul class="plan-list">
+                    <li><strong>Progress Tracking:</strong> Weigh yourself weekly and take monthly measurements</li>
+                    <li><strong>Adjustments:</strong> Re-evaluate your plan every 4-6 weeks</li>
+                    <li><strong>Consistency:</strong> Stick to your plan for at least 8 weeks to see significant results</li>
+                    <li><strong>Professional Advice:</strong> Consult with a healthcare provider before starting any new fitness program</li>
+                </ul>
+            `;
+            
+            return summaryHTML;
+        }
+
+        // Initialize with some sample data for demo purposes
+        window.addEventListener('DOMContentLoaded', function() {
+            // Set some sample values to demonstrate the form
+            document.getElementById('name').value = 'Alex Johnson';
+            document.getElementById('age').value = '28';
+            document.getElementById('height').value = '175';
+            document.getElementById('weight').value = '75';
+            document.getElementById('activity').value = 'moderate';
+            document.getElementById('goal').value = 'muscle-gain';
+            document.getElementById('days').value = '4';
+            document.getElementById('diet').value = 'high-protein';
+        });
+    </script>
+</body>
+</html>
