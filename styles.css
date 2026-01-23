@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: white;
+    color: black;
+}
+
+.dark {
+    background: #121212;
+    color: white;
+}
+
+nav {
+    background: black;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.hero {
+    background: linear-gradient(to right, black, green);
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+}
+
+section {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+form {
+    max-width: 500px;
+    margin: auto;
+    display: grid;
+    gap: 10px;
+}
+
+input, select, textarea {
+    padding: 10px;
+}
+
+.btn {
+    background: orange;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.card {
+    background: #f5f5f5;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.dark .card {
+    background: #1f1f1f;
+}
+
+#themeToggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}
